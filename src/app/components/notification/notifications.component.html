@@ -1,0 +1,26 @@
+<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right show">
+    <span class="dropdown-item dropdown-header">
+      Notifications
+    </span>
+  
+    <div *ngFor="let n of notifications">
+      <a
+        class="dropdown-item"
+        [routerLink]="['/notifications']"
+        (click)="markAsRead(n)"
+      >
+        <i class="fas fa-bell mr-2"></i>
+        {{ n.message }}
+        <span class="float-right text-muted text-sm">
+          {{ n.createdAt | date:'short' }}
+        </span>
+      </a>
+    </div>
+  
+    <div class="dropdown-divider"></div>
+  
+    <a class="dropdown-item dropdown-footer" [routerLink]="['/notifications']">
+      Voir toutes les notifications
+    </a>
+  </div>
+  

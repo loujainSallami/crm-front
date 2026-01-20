@@ -1,0 +1,46 @@
+<div class="note-container">
+    <h3>🗒️ Notes du rendez-vous</h3>
+  
+    <!-- 🔹 Ajouter une nouvelle note -->
+    <div class="add-note">
+      <textarea
+        [(ngModel)]="newNoteContent"
+        placeholder="Écrire une note..."
+      ></textarea>
+      <button class="btn add" (click)="addNote()">Ajouter</button>
+    </div>
+  
+    <hr />
+  
+    <!-- 🔹 Liste des notes -->
+    <div *ngIf="notes.length > 0; else noNotes">
+      <div class="note-card" *ngFor="let note of notes">
+        
+        <!-- ✏️ Mode édition -->
+        <div *ngIf="editingNote && editingNote.id === note.id; else viewMode">
+          <textarea [(ngModel)]="editingNote.content"></textarea>
+          <div class="actions">
+            <button class="btn save" (click)="saveEdit()">💾 Sauvegarder</button>
+            <button class="btn cancel" (click)="cancelEdit()">❌ Annuler</button>
+          </div>
+        </div>
+  
+        <!-- 👁️ Mode affichage -->
+        <ng-template #viewMode>
+          <p>{{ note.content }}</p>
+          <small>🕓 Créée le : {{ note.createdAt | date: 'short' }}</small>
+          <div class="actions">
+            <button class="btn edit" (click)="startEditing(note)">✏️ Modifier</button>
+            <button class="btn delete" (click)="deleteNote(note)">🗑️ Supprimer</button>
+          </div>
+        </ng-template>
+  
+      </div>
+    </div>
+  
+    <!-- 🚫 Aucune note -->
+    <ng-template #noNotes>
+      <p class="no-notes">Aucune note pour ce rendez-vous.</p>
+    </ng-template>
+  </div>
+  

@@ -1,0 +1,76 @@
+<hr>
+
+<div class="task-container">
+  <h2>Nouvelle tâche</h2>
+  <input type="text" [(ngModel)]="newTaskTitle" placeholder="Titre" />
+  <input type="text" [(ngModel)]="newTaskDescription" placeholder="Description" />
+
+  <select [(ngModel)]="newTaskStatus">
+    <option *ngFor="let status of ['PENDING','IN_PROGRESS','COMPLETED']" [value]="status">
+      {{ status }}
+    </option>
+  </select>
+
+  <select [(ngModel)]="newTaskPriority">
+    <option *ngFor="let priority of ['LOW','MEDIUM','HIGH']" [value]="priority">
+      {{ priority }}
+    </option>
+  </select>
+
+  <input type="date" [(ngModel)]="newTaskDueDate" placeholder="Date limite" />
+
+  <button class="btn add" type="button" (click)="addTask()">Ajouter</button>
+</div>
+
+<hr>
+
+<div class="task-container">
+  <h2>Liste des tâches</h2>
+  <div *ngIf="tasks.length > 0; else noTasks">
+    <div class="task-card" *ngFor="let task of tasks">
+
+      <!-- ✏️ Mode édition -->
+      <div *ngIf="editingTask && editingTask.id === task.id; else viewModeTask">
+        <input type="text" [(ngModel)]="editingTask.title" placeholder="Titre" />
+        <input type="text" [(ngModel)]="editingTask.description" placeholder="Description" />
+        <select [(ngModel)]="editingTask.status">
+          <option *ngFor="let status of ['PENDING','IN_PROGRESS','COMPLETED']" [value]="status">
+            {{ status }}
+          </option>
+        </select>
+        <select [(ngModel)]="editingTask.priority">
+          <option *ngFor="let priority of ['LOW','MEDIUM','HIGH']" [value]="priority">
+            {{ priority }}
+          </option>
+        </select>
+        <input type="date" [(ngModel)]="editingTask.dueDate" placeholder="Date limite" />
+
+        <div class="task-actions">
+          <button class="btn save" type="button" (click)="saveEdit()">💾 Sauvegarder</button>
+          <button class="btn cancel" type="button" (click)="cancelEdit()">❌ Annuler</button>
+        </div>
+      </div>
+
+      <!-- 👁️ Mode affichage -->
+      <ng-template #viewModeTask>
+        <p><strong>{{ task.title }}</strong></p>
+        <p>{{ task.description }}</p>
+        <small>Status: <span [ngClass]="{'overdue': isOverdue(task)}">{{ task.status }}</span></small>
+        <small>Priority: {{ task.priority }}</small><br>
+        <small *ngIf="task.dueDate">Due: {{ task.dueDate | date:'shortDate' }}</small>
+        <small *ngIf="task.completedAt">Terminé le: {{ task.completedAt | date:'short' }}</small>
+
+        <div class="task-actions">
+          <button class="btn edit" type="button" (click)="startEditing(task)">✏️ Modifier</button>
+          <button class="btn delete" type="button" (click)="deleteTask(task)">🗑️ Supprimer</button>
+          <button class="btn add" type="button" (click)="completeTask(task)" [disabled]="task.completed">✔ Terminer</button>
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+
+  <ng-template #noTasks>
+    <p class="no-notes">Aucune tâche pour ce rendez-vous.</p>
+  </ng-template>
+</div>

@@ -1,0 +1,21 @@
+<nav class="main-header navbar navbar-expand navbar-white navbar-orange navbar-light">
+    <ul class="navbar-nav ml-auto">
+  
+      <!-- 🔔 Notifications -->
+      <li class="nav-item dropdown">
+        <app-notifications></app-notifications>
+          </li>
+        <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="fas fa-adjust"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right p-2">
+          <button class="btn btn-sm btn-light w-100 mb-1" (click)="setTheme('light')">Light</button>
+          <button class="btn btn-sm btn-dark w-100 mb-1" (click)="setTheme('dark')">Dark</button>
+          <button class="btn btn-sm btn-secondary w-100" (click)="setTheme('auto')">Auto</button>
+        </div>
+      </li>
+  
+    </ul>
+  </nav>
+  

@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Détails du rendez-vous</h2>
+<mat-dialog-content>
+  <p><strong>Description :</strong> {{ data.description }}</p>
+  <p><strong>Utilisateur :</strong> {{ data.user.fullName || 'Inconnu' }}</p>
+  <p *ngIf="data.lead">
+    <strong>Lead :</strong> {{ data.lead.firstName }}
+  </p>
+  <p><strong>Début :</strong> {{ data.startTime }}</p>
+  <p><strong>Fin :</strong> {{ data.endTime }}</p>
+  
+  <!-- Use safe navigation and type assertion -->
+  <app-note *ngIf="data?.id" [appointmentId]="data.id!"></app-note>
+  
+  <app-task
+  [appointmentId]="data.id"
+  [newTaskUserId]="data.user.id">
+</app-task>
+
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" (click)="onUpdate()">
+    Modifier
+  </button>
+  <button mat-flat-button color="warn" (click)="onDelete()">
+    Supprimer
+  </button>
+  <button mat-button (click)="onClose()">Fermer</button>
+</mat-dialog-actions>

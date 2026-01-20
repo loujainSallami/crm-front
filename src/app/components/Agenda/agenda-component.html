@@ -1,0 +1,41 @@
+<div class="agenda-container">
+  <div class="agenda-header" style="display: flex; align-items: center; gap: 1rem;">
+    <h2>Agenda</h2>
+
+    <!-- Sélecteur d'utilisateur -->
+    <mat-form-field appearance="fill" style="width: 220px;">
+      <mat-label>Sélectionner un utilisateur</mat-label>
+      <mat-select (selectionChange)="loadAppointments($event.value)">
+        <mat-option *ngFor="let user of users" [value]="user.id">
+          {{ user.fullName || user.user }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Bouton création rendez-vous -->
+    <button mat-raised-button color="primary" (click)="openCreateDialog()">
+      + Créer un rendez-vous
+    </button>
+  </div>
+
+  <div class="agenda-content" style="display: flex; gap: 1rem; margin-top: 1rem;">
+    <!-- Colonne gauche : liste des rendez-vous + petit calendrier -->
+    <div style="width: 250px; display: flex; flex-direction: column; gap: 1rem;">
+      
+      <!-- Liste des rendez-vous -->
+      <app-appointment-list (appointmentsLoaded)="onAppointmentsLoaded($event)">
+      </app-appointment-list>
+
+      <!-- Petit calendrier -->
+      <div class="mini-calendar">
+        <full-calendar [options]="miniCalendarOptions"></full-calendar>
+      </div>
+    </div>
+
+    <!-- Grand calendrier -->
+    <div class="calendar-box">
+      <full-calendar #fullCalendar [options]="calendarOptions" class="calendar-google-style">
+      </full-calendar>
+    </div>
+    
+</div>

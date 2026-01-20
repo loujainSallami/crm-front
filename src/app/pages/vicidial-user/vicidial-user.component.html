@@ -1,0 +1,50 @@
+<div class="container">
+    <!-- Titre -->
+    <h2>Gestion des utilisateurs</h2>
+  
+    <!-- Message de retour après la soumission du formulaire -->
+    <div *ngIf="message" [ngClass]="{'alert': true, 'alert-success': success, 'alert-danger': !success}">
+      {{ message }}
+    </div>
+  
+    <!-- Formulaire de création d'utilisateur -->
+    <form (ngSubmit)="createUser()" #userForm="ngForm">
+      <div class="form-group">
+        <label for="user">Nom d'utilisateur</label>
+        <input type="text" id="user" name="user" [(ngModel)]="newUser.user" required class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="pass">Mot de passe</label>
+        <input type="password" id="pass" name="pass" [(ngModel)]="newUser.pass" required class="form-control" />
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Créer l'utilisateur</button>
+    </form>
+  
+    <!-- Liste des utilisateurs existants -->
+    <h3 class="mt-4">Liste des utilisateurs</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Nom d'utilisateur</th>
+          <th>Nom complet</th>
+          <th>Group</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.user }}</td>
+          <td>{{ user.full_name || 'Non spécifié' }}</td>
+          <td>{{ user.user_group || 'Non spécifié' }}</td>
+          <td>
+            <!-- Actions (par exemple, modifier ou supprimer l'utilisateur) -->
+            <button class="btn btn-warning btn-sm">Modifier</button>
+            <button class="btn btn-danger btn-sm">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
